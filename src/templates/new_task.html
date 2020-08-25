@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your tasks</title>
+</head>
+<body>
+    <div class="wrapper">
+        <ul class="tasks-list">
+            <li><a href="/">Все задачи</a></li>
+            <li><a class="active"  href="/add">Добавить</a></li>
+            <li><a href="/finished">Завершенные</a></li>
+        </ul>
+        <div class="content">
+            <form class="form" method="POST">
+                {% csrf_token %}
+                <table>
+                    {{ form }}
+                </table>
+                <input type="submit" value="Добавить">
+            </form>
+        </div>
+    </div>
+</body>
+<style>
+    .wrapper {
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    .tasks-list {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10%;
+        list-style: none;
+    }
+
+    .active::before {
+        content: "> ";
+    }
+
+    .content {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+</html>
