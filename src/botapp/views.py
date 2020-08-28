@@ -1,12 +1,12 @@
+from typing import Optional
+import json
+
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 
 from .services import messages
-
-from typing import Optional 
-import json
 
 
 @csrf_exempt
@@ -22,4 +22,3 @@ def handle_request(request):
         messages.handle_message(data["object"])
         
     return HttpResponse("ok")
-        

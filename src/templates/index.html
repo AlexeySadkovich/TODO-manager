@@ -7,13 +7,34 @@
 </head>
 <body>
     <div class="wrapper">
-        <ul class="tasks-list">
+        <ul class="menu">
             <li><a class="active" href="/">Все задачи</a></li>
             <li><a href="/add">Добавить</a></li>
             <li><a href="/finished">Завершенные</a></li>
+            {% if is_authenticated %}
+            <li>{{ user_name }} | <a href="/logout">Выйти</a></li>
+            {% else %}
+            <li><a href="/auth">Войти</a></li>
+            {% endif %}
         </ul>
         <div class="content">
-            {{ message }}
+            {% if not is_authenticated %}
+                <h3 align="center">{{ message }}</h3>
+            {% else %}
+                {% for task in tasks_list %}
+                    <div class="task">
+                        <p>{{ forloop.counter }} - {{ task.description }} | {{ task.deadline_date }} {{ task.deadline_time }}</p>
+                        <div class="buttons">
+                            <form action="/confirm_task/{{ forloop.counter }}" method="GET">
+                                <input type="submit" value="Готово">
+                            </form>
+                            <form action="/delete_task/{{ forloop.counter }}" method="GET">
+                                <input type="submit" value="X">
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </body>
@@ -23,15 +44,32 @@
         margin: 0 auto;
     }
 
-    .tasks-list {
+    .menu {
         display: flex;
         justify-content: space-between;
+        padding: 0;
         margin-top: 10%;
         list-style: none;
     }
 
     .active::before {
         content: "> ";
+    }
+
+    .task {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        min-width: 60%;
+    }
+
+    .buttons {
+        display: flex;
+    }
+
+    .buttons input {
+        margin-left: 10px;
     }
 </style>
 </html>

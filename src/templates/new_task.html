@@ -7,19 +7,28 @@
 </head>
 <body>
     <div class="wrapper">
-        <ul class="tasks-list">
+        <ul class="menu">
             <li><a href="/">Все задачи</a></li>
             <li><a class="active"  href="/add">Добавить</a></li>
             <li><a href="/finished">Завершенные</a></li>
+            {% if is_authenticated %}
+            <li>{{ user_name }} | <a href="/logout">Выйти</a></li>
+            {% else %}
+            <li><a href="/auth">Войти</a></li>
+            {% endif %}
         </ul>
         <div class="content">
-            <form class="form" method="POST">
+            {% if not is_authenticated %}
+            <h3 align="center">{{ message }}</h3>
+            {% else %}
+            <form class="form" method="POST" action="/save_task">
                 {% csrf_token %}
                 <table>
                     {{ form }}
                 </table>
                 <input type="submit" value="Добавить">
             </form>
+            {% endif %}
         </div>
     </div>
 </body>
@@ -29,9 +38,10 @@
         margin: 0 auto;
     }
 
-    .tasks-list {
+    .menu {
         display: flex;
         justify-content: space-between;
+        padding: 0;
         margin-top: 10%;
         list-style: none;
     }

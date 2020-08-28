@@ -7,8 +7,10 @@ def create_task(request):
     
     services.add_task(services.parse_request(request))
 
+
 def delete_task(request):
     pass
+
 
 def show_tasks(request):
     pass
