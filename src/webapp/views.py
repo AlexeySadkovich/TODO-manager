@@ -62,8 +62,6 @@ def render_finished_tasks_page(request):
 def authenticate_user(request):
     """Perform user authentication"""
 
-    url = get_authentication_link()
-
     # Check for getting access token
     if request.GET.get("code") is not None:
         user = get_user_info(request.GET.get("code"))
@@ -73,6 +71,7 @@ def authenticate_user(request):
 
         return HttpResponseRedirect("/")
     else:
+        url = get_authentication_link()
         return HttpResponseRedirect(url)
 
 

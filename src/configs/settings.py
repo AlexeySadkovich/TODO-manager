@@ -1,6 +1,10 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
+
+# Loading environment variables from ./.env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -15,10 +19,9 @@ SECRET_KEY = 'jk-&*^%5e6ms7sf&_!g7&7(3_9t^!%t)4t7o1)30wksv2^!wy+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# If you use ngrok to serve your app
-NGROK_URL = ''
+SERVER_IP = os.getenv('SERVER_IP') 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', NGROK_URL]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', SERVER_IP]
 
 
 # Application definition
@@ -117,17 +120,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-TOKEN = os.environ.get('VK_API_KEY')
-CONFIRM_STR = ''
+TOKEN = os.getenv('VK_API_KEY')
+CONFIRM_STR = os.getenv('CONFIRMATION_STR')
 
-VK_APP_ID = os.environ.get('VK_APP_ID')
-VK_SECRET_KEY = os.environ.get('VK_SECRET_KEY')
+VK_APP_ID = os.getenv('VK_APP_ID')
+VK_SECRET_KEY = os.getenv('VK_SECRET_KEY')
 
 VK_API_VERSION = '5.122'
 VK_API_ENDPOINT = 'https://api.vk.com/method/'
 VK_OAUTH_URL = 'http://oauth.vk.com/authorize'
 
-if len(NGROK_URL) > 0:
-    REDIRECT_URL = NGROK_URL + "/auth"
-else:
-    REDIRECT_URL = "http://localhost:8000/auth"
+REDIRECT_URL = SERVER_IP + "/auth"

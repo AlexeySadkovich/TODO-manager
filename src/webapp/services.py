@@ -18,12 +18,12 @@ def get_user_info(code: str) -> dict:
         "client_secret": settings.VK_SECRET_KEY,
         "code": code,
         "redirect_uri": settings.REDIRECT_URL
-    }
+    }   
 
     # Getting access token from vk oauth service
     req = requests.get("http://oauth.vk.com/access_token?" + urllib.parse.urlencode(params))
     user = req.json()
-
+    
     if req.status_code == 200:
         params = {
             "uids": user["user_id"],
@@ -47,6 +47,8 @@ def get_authentication_link() -> str:
         "redirect_uri": settings.REDIRECT_URL,
         "response_type": "code"
     }
+   
     url = settings.VK_OAUTH_URL + "?" + urllib.parse.urlencode(params)
+    print(url)
 
     return url

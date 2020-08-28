@@ -62,7 +62,7 @@ def _create_tasks_list(tasks: dict) -> str:
     """Get dict with keys and values and create string with tasks"""
     tasks_list = ""
     for idx, task in tasks:
-        tasks_list = f"{idx} - {task.description} | {task.deadline_date} {task.deadline_time}\n"
+        tasks_list += f"{idx} - {task.description} | {task.deadline_date} {task.deadline_time}\n"
 
     return tasks_list
 

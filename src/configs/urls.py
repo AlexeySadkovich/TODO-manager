@@ -6,7 +6,5 @@ from botapp import views
 
 urlpatterns = [
     path('bot/', views.handle_request),
-    path('', include('webapp.urls')),
-
-    path('admin/', admin.site.urls),
+    path('', include('webapp.urls'))    
 ]
