@@ -17,6 +17,13 @@ def handle_message(data: dict) -> None:
 
     current_action = _get_action(user_id)
 
+    if message.lower() in ("вернуться", "4"):
+        if current_action == "main":
+            _send_message(user_id, "Вы уже в главном меню")
+        else:
+            _update_action(user_id, "main")
+            _send_message(user_id, _get_main_menu_message())
+
     if current_action == "main":
         if message.lower() in ("добавить", "1"):
             _update_action(user_id, "new_task")
@@ -30,7 +37,7 @@ def handle_message(data: dict) -> None:
             _send_message(user_id, "Выберите номер задачи")
 
         else:
-            _send_message(user_id, "1. Добавить\n2. Все задачи\n3. Удалить")
+            _send_message(user_id, _get_main_menu_message())
 
     elif current_action == "new_task":
         data["description"] = message
@@ -92,3 +99,15 @@ def _send_message(peer_id: str, message: str) -> None:
         }
 
     api.call_api('messages.send', params)
+
+
+def _get_main_menu_message() -> str:
+    message = '''
+        Выберите действие
+        1. Добавить
+        2. Все задачи
+        3. Удалить
+        4. Отмена
+        '''
+
+    return message
