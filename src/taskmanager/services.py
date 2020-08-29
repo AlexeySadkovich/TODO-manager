@@ -11,7 +11,7 @@ def save_task(user_id: str, current_action: str, data: dict) -> None:
         task.save()
     elif current_action == "set_deadline_date":
         user_tasks = Task.objects.in_bulk(user=user)
-        user_tasks[len(user_tasks)].deadline_date = data["deadline_date"]
+        user_tasks[len(user_tasks)-1].deadline_date = data["deadline_date"]
         user_tasks.save()
     elif current_action == "set_deadline_time":
         user_tasks = Task.objects.in_bulk(user=user)
@@ -25,6 +25,7 @@ def save_task(user_id: str, current_action: str, data: dict) -> None:
 
 
 def make_task_done(user_id: str, task_id: str) -> None:
+    """Set task status to finished"""
     user = _get_user(user_id)
     task = Task.objects.get(user=user, id=task_id)
     task.finished = True

@@ -1,8 +1,12 @@
 from random import getrandbits
+import logging
 
 from . import api
 from taskmanager.models import User
 from taskmanager.services import get_tasks, save_task, delete_task
+
+
+logger = logging.getLogger(__name__)
 
 
 def handle_message(data: dict) -> None:
@@ -26,7 +30,7 @@ def handle_message(data: dict) -> None:
             _send_message(user_id, "Выберите номер задачи")
 
         else:
-            _send_message(user_id, "1. Добавить задачу\n2. Все задачи\n3. Удалить задачу")
+            _send_message(user_id, "1. Добавить\n2. Все задачи\n3. Удалить")
 
     elif current_action == "new_task":
         data["description"] = message
@@ -48,6 +52,7 @@ def handle_message(data: dict) -> None:
         save_task(user_id, current_action, data)
         _send_message("Задание сохранено")
         _update_action(user_id, "main")
+        logger.info(f"Task saved for user {user_id}")
 
     elif current_action == "delete_task":
         delete_task(user_id, message)
@@ -55,7 +60,7 @@ def handle_message(data: dict) -> None:
         _update_action(user_id, "main")
 
     else:
-        print("[ERROR] Wrong user action")
+        logger.critical("Wrong user action")
 
 
 def _create_tasks_list(tasks: dict) -> str:

@@ -82,6 +82,54 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'main': {
+            'format': '[{levelname}] [{asctime}] - {module} - {message}',
+            'style': '{'
+        }
+    },
+    'handlers': {
+        'common': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "../logs/common.log"),
+            'formatter': 'main'
+        },
+        'botapp': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "../logs/botapp.log"),
+            'formatter': 'main'
+        },
+        'taskmanager': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "../logs/taskmanager.log"),
+            'formatter': 'main'
+        }
+    },
+    'loggers': {
+        'botapp': {
+            'handlers': ['common', 'botapp'],
+            'level': 'INFO',
+            'propagate': True
+        },
+        'webapp': {
+            'handlers': ['common'],
+            'level': 'WARNING',
+            'propagate': True
+        },
+        'taskmanager': {
+            'handlers': ['common'],
+            'level': 'WARNING',
+            'propagate': True
+        }
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
