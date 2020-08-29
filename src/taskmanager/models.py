@@ -11,6 +11,6 @@ class Task(models.Model):
     """Модель задания"""
     user = models.ForeignKey(User, verbose_name="user", on_delete=models.CASCADE, default=-1)
     description = models.CharField(verbose_name="task description", max_length=100)
-    deadline_date = models.DateField(verbose_name="date of deadline", default=None)
-    deadline_time = models.TimeField(verbose_name="time of deadline", default=None)
+    deadline_date = models.DateField(verbose_name="date of deadline", auto_now_add=True, blank=True)
+    deadline_time = models.TimeField(verbose_name="time of deadline", auto_now_add=True, blank=True)
     finished = models.BooleanField(verbose_name="is task finished", default=False)

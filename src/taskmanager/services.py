@@ -1,11 +1,16 @@
+import logging
+
 from .models import Task, User
+
+
+logger = logging.getLogger(__name__)
 
 
 def save_task(user_id: str, current_action: str, data: dict) -> None:
     """Saving task sent by user through bot or site"""
-
+    
     user = _get_user(user_id)
-
+    
     if current_action == "new_task":
         task = Task(user=user, description=data["description"])
         task.save()

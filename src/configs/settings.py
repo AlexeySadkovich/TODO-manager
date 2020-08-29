@@ -123,8 +123,8 @@ LOGGING = {
             'propagate': True
         },
         'taskmanager': {
-            'handlers': ['common'],
-            'level': 'WARNING',
+            'handlers': ['common', 'taskmanager'],
+            'level': 'INFO',
             'propagate': True
         }
     }

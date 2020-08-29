@@ -14,7 +14,7 @@ def handle_message(data: dict) -> None:
 
     message = data["message"]["text"]
     user_id = data["message"]["from_id"]
-
+    
     current_action = _get_action(user_id)
 
     if message.lower() in ("вернуться", "4"):
@@ -23,6 +23,8 @@ def handle_message(data: dict) -> None:
         else:
             _update_action(user_id, "main")
             _send_message(user_id, _get_main_menu_message())
+
+        return
 
     if current_action == "main":
         if message.lower() in ("добавить", "1"):
@@ -41,6 +43,8 @@ def handle_message(data: dict) -> None:
 
     elif current_action == "new_task":
         data["description"] = message
+
+        logger.info(f"Saving message from {user_id}")
 
         save_task(user_id, current_action, data)
         _send_message(user_id, "Введите дату завершения.\nПример: 1970-1-1")
