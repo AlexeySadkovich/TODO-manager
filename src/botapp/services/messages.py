@@ -20,6 +20,7 @@ def handle_message(data: dict) -> None:
     if message.lower() in ("вернуться", "4"):
         if current_action == "main":
             _send_message(user_id, "Вы уже в главном меню")
+            _send_message(user_id, _get_main_menu_message())
         else:
             _update_action(user_id, "main")
             _send_message(user_id, _get_main_menu_message())
