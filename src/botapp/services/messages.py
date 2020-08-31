@@ -69,16 +69,16 @@ def handle_message(data: dict) -> None:
         logger.info(f"Task saved for user {user_id}")
 
     elif current_action == "delete_task":
-        delete_task(user_id, message)
+        delete_task(user_id, int(message))
         _send_message(user_id, "Задача удалена")
         _update_action(user_id, "main")
 
 
-def _create_tasks_list(tasks: dict) -> str:
+def _create_tasks_list(tasks: list) -> str:
     """Get dict with keys and values and create string with tasks"""
     tasks_list = ""
-    for idx, task in tasks:
-        tasks_list += f"{idx} - {task.description} | {task.deadline_date} {task.deadline_time}\n"
+    for idx, task in enumerate(tasks):
+        tasks_list += f"{idx+1}. {task.description} | {task.deadline_date} {task.deadline_time}\n"
 
     return tasks_list
 

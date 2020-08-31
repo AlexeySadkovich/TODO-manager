@@ -4,7 +4,7 @@ from .models import Task, User
 def save_task(user_id: str, current_action: str, data: dict) -> None:
     """Saving task sent by user through bot or site"""
     user = _get_user(user_id)
-    
+
     if current_action == "new_task":
         task = Task(user=user, description=data["description"])
         task.save()
@@ -34,10 +34,10 @@ def make_task_done(user_id: str, task_id: str) -> None:
 def delete_task(user_id: str, task_id: str) -> None:
     """Deleting task which has id specified by user"""
     user = _get_user(user_id)
-    Task.objects.get(user=user)[task_id-1].delete()
+    Task.objects.filter(user=user)[task_id].delete()
 
 
-def get_tasks(user_id: str, is_finished: bool = False) -> dict:
+def get_tasks(user_id: str, is_finished: bool = False) -> list:
     """Return all tasks of user"""
     user = _get_user(user_id)
     tasks = Task.objects.filter(user=user, finished=is_finished)

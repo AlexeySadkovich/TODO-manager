@@ -17,7 +17,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'jk-&*^%5e6ms7sf&_!g7&7(3_9t^!%t)4t7o1)30wksv2^!wy+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 SERVER_IP = os.getenv('SERVER_IP') 
 

@@ -3,8 +3,10 @@ from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from taskmanager import services
 from .forms import TaskForm
 from .services import *
+from core.views import base_view
 
 
+@base_view
 def render_index_page(request):
     """Rendering main page of site"""
 
@@ -22,6 +24,7 @@ def render_index_page(request):
     return render(request, "index.html", context=data)
 
 
+@base_view
 def render_new_task_page(request):
     """Rendering task creating form"""
 
@@ -42,6 +45,7 @@ def render_new_task_page(request):
     return render(request, "new_task.html", context=data)
 
 
+@base_view
 def render_finished_tasks_page(request):
     """Rendering page with finished tasks"""
 
@@ -59,6 +63,7 @@ def render_finished_tasks_page(request):
     return render(request, "finished.html", context=data)
 
 
+@base_view
 def authenticate_user(request):
     """Perform user authentication"""
 
@@ -82,6 +87,7 @@ def logout_user(request):
     return HttpResponseRedirect("/")
 
 
+@base_view
 def save_task(request):
     """Processing task saving request"""
 
