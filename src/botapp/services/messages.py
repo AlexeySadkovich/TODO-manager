@@ -56,14 +56,14 @@ def handle_message(data: dict) -> None:
         data["deadline_date"] = message
 
         save_task(user_id, current_action, data)
-        _send_message("Введите время завершения.\nПример: 14:00")
+        _send_message(user_id, "Введите время завершения.\nПример: 14:00")
         _update_action(user_id, "set_deadline_time")
 
     elif current_action == "set_deadline_time":
         data["deadline_time"] = message
 
         save_task(user_id, current_action, data)
-        _send_message("Задание сохранено")
+        _send_message(user_id, "Задание сохранено")
         _update_action(user_id, "main")
 
         logger.info(f"Task saved for user {user_id}")
